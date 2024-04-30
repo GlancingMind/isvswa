@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view nodetheme="Martha">
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="Dir"/>
+   <type name="Dir0"/>
+   <type name="Dir1"/>
+   <type name="Entry0"/>
+   <type name="Entry1"/>
+   <type name="Entry2"/>
+   <type name="Entry3"/>
+   <type name="File0"/>
+   <type name="Int"/>
+   <type name="Name0"/>
+   <type name="Name1"/>
+   <type name="Name2"/>
+   <type name="Name3"/>
+   <type name="Root"/>
+   <type name="String"/>
+   <type name="univ"/>
+   <type name="seq/Int"/>
+</node>
+
+<node color="Blue">
+   <type name="File"/>
+</node>
+
+<node color="Yellow">
+   <type name="Object"/>
+</node>
+
+<node shape="Ellipse" color="Green">
+   <type name="Entry"/>
+</node>
+
+<node visible="no" color="Blue">
+   <type name="Name"/>
+</node>
+
+<edge visible="no" attribute="yes">
+   <relation name="name"> <type name="Entry"/> <type name="Name"/> </relation>
+</edge>
+
+</view>
+
+</alloy>
