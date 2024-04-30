@@ -24,15 +24,18 @@ a
 // b
 
 pred PersonsCanNeverBeTheirOwnChildren {
-    all p: Person | p not in p.children
+    // all p: Person | p not in p.children
+    no children & iden
 }
 
 pred PersonsCanNeverBeTheirOwnSpouses {
-    all p: Person | p not in p.spouse
+    //all p: Person | p not in p.spouse
+    no spouse & iden
 }
 
 pred PersonsCanNeverBeTheirOwnSiblings {
-    all p: Person | p not in p.siblings
+    // all p: Person | p not in p.siblings
+    no siblings & iden
 }
 
 pred PersonsCanNeverBeMarriedToTheirDescendants {
@@ -107,7 +110,12 @@ run example {
 } for exactly 3 Person
 
 // c
-// Wenn eine andere PErson ein Geschwisterteil ist, dann ist dies auch umgekehrt der Fall.
+// Elternteil einer Person kann nicht gleichzeitig ein Geschwisterteil sein
+pred ParentCannotBeSibling {
+    all p: Person | all c: p.children | p not in c.siblings
+}
+
+// Wenn eine andere Person ein Geschwisterteil ist, dann ist dies auch umgekehrt der Fall.
 // SiblingsRelationIsAlwaysBidirectional
 
 // Verheiratete Personen haben keinen gemeinsamen Vorfahren
