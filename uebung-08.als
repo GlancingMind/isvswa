@@ -4,7 +4,7 @@ sig User {
     follows: set User,
     sees: set Photo,
     posts: set Photo,
-    // suggested: set User
+    suggested: set User
 }
 
 sig Influencer extends User {}
@@ -61,7 +61,21 @@ pred InfluencersAreFollowedByEveryoneElse {
 
 pred InfluencersPostEveryDay {
     // Jeder Post/Photo eines Influencers muss zu allen Daten mappen.
-    // TODO all influencer: Influencer | all day: Day | influencer.posts
+    // Anders ausgedrückt: Jeder Tag muss von einem Influencer über Posts erreichbar sein.
+    all i: Influencer | Day in i.posts.date
+}
+
+pred SuggestedUsers {
+    all u: User | u.suggested = (u.follows.follows - u.follows - u)
+}
+
+pred UserOnlySeesAdsFromFollowedOrSuggestedUsers {
+    // all u: User | u.sees.
+    // (Influencer$2.sees & Ad).poster
+
+    // Das ist so ziemlich das selbe wie UserSeesOnlyPhotosOfFollowers
+    // Ein User sieht nur die Ad-Posts seiner gefolgten User und der vorgeschlagenen User
+    all u: User | u.sees = (u.(follows + suggested).posts & Ad)
 }
 
 run {
@@ -70,4 +84,7 @@ run {
     UserSeesOnlyPhotosOfFollowers
     IfUserPostsAnAdThenAllPostsOfThisUserShallBeAds
     InfluencersAreFollowedByEveryoneElse
-} for exactly 2 Influencer, 2 User, 3 Photo
+    InfluencersPostEveryDay
+    SuggestedUsers
+    UserOnlySeesAdsFromFollowedOrSuggestedUsers
+} // for exactly 3 Influencer, 3 User, 3 Ad, 3 Photo, 3 Day
