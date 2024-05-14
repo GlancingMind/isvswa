@@ -41,7 +41,7 @@ fact StudentKannNichtZugleichEingeschriebenUndAufWartelisteSein {
 }
 
 fact MasterantKannKeineKurseLehrenInWelchenErEingeschriebenIst {
-    all k: Kurs | k.dozent not in k.eingeschrieben
+    all k: Kurs | k.dozent not in (k.eingeschrieben + k.warteliste)
 }
 
 fact KursVoraussetzungIstAzyklich {
@@ -49,7 +49,7 @@ fact KursVoraussetzungIstAzyklich {
 }
 
 fact StudentKannSichNurZuEinemKursAnmeldenDessenVoraussetzungenErErfuellt {
-    all k: Kurs | all s: k.(eingeschrieben + warteliste) | k.voraussetzung in s.absolviert
+    all k: Kurs, s: k.(eingeschrieben + warteliste) | k.voraussetzung in s.absolviert
 }
 
 fact MentorEinesMasterstudentenBetreutDiesenAuch {
@@ -70,5 +70,6 @@ run {}
 
 // Weitere Integritätsprüfungen:
 // - Eine Matrikelnummer kann nur einen Studenten zugeordnet werden.
+//    all disj s1, s2: Student | s1.matrikelnummer != s2.matrikelnummer
 // - Ein Kurs kann nur von einem Fachbereich angeboten werden.
 // - Kurse sollten keine Gegenseitige Voraussetzungsabhängigkeit haben.

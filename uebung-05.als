@@ -1,9 +1,3 @@
-//sig Person {
-//    mother: Person,
-//    father: Person,
-//    sister: Person
-//}
-
 sig s {
     p: set s,
     q: set s
